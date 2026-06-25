@@ -64,4 +64,33 @@ python advanced_forecasting_pipeline.py
 
 ||7. Feasibility & Expected Impact
 >>Feasibility: Utilizing Chronos in a parameter-efficient fine-tuning (LoRA) or zero-shot capability completely removes the massive GPU training times typically required by bespoke deep architectures. Paired with CatBoost's fast local hardware footprint and a lightweight PyTorch gating model (under 10,000 parameters), the entire framework can be trained, cross-validated, and deployed globally in minutes, making it highly viable for a solo developer workflow.
->Commercial Impact: By heavily mitigating the downstream bullwhip effect during unexpected black-swan disruptions, the Ailurophile framework provides verifiable protection against warehouse inventory stockouts and bloated material holding costs, turning supply chain volatility into an optimized asset.
+
+
+
+```mermaid
+graph TD
+    %% System Components
+    DataCo[(DataCo Transaction Stream)] --> CatMatrix[Categorical Feature Matrix]
+    DataCo --> DemandSeq[Demand Temporal Sequence]
+
+    %% Feature Processing Paths
+    DemandSeq --> ContextEngine[Statistical Context Extractor]
+    DemandSeq --> Chronos[Expert A: Fine-Tuned Chronos-T5]
+    CatMatrix --> CatBoost[Expert B: Optimized CatBoost]
+
+    %% Routing Layer
+    ContextEngine -->|Rolling Parameters| GatingNet[Context-Aware Gating MLP]
+    GatingNet -->|Sigmoidal Mapping| AlphaAssignment{Alpha Weight Matrix}
+
+    %% Fusion Engine
+    Chronos -->|DL Forecast Matrix| FusionLayer[Learnable Fusion Layer]
+    CatBoost -->|ML Forecast Matrix| FusionLayer
+    AlphaAssignment -->|Dynamic Splitting Weights| FusionLayer
+
+    %% Operational Infrastructure
+    FusionLayer -->|Blended Prediction Array| FastAPIEngine{FastAPI Microservice Engine}
+    FastAPIEngine -->|POST /predict Payload| EndSystem[WMS / Enterprise ERP]
+    FastAPIEngine -.->|Continuous Monitoring| MLOpsLoop[Data Drift & Automated Retraining]
+
+
+
