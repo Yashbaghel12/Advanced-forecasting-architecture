@@ -1,3 +1,4 @@
+
 # Advanced-forecasting-architecture
 Developed by Team Ailurophile (Solo Submission), this repository contains the official production prototype for an input-conditioned, context-aware forecasting architecture designed for non-stationary supply chain demand. It explicitly moves beyond static model blending (e.g., fixed 60/40 averages) and traditional stacked meta-learners by introducing a lightweight neural arbitrator that shifts model authority dynamically in response to real-time market volatility and anomalies.
 
@@ -41,7 +42,7 @@ Volatile
 Market Window (MAE)                   36.1336                  24.8263                    28.3280              12.7760
   
 During quiet macro-regimes, the gating network relies safely on the sequence model's structural strengths, achieving <6.3922> MAE. The moment a sudden demand shock hits the system—causing the standalone Chronos model to collapse to 36.1336 MAE and dragging the fixed blend down to 28.3280 MAE—the neural gating interface automatically shifts system authority toward CatBoost, preserving system integrity and dropping the final error to 12.7760 MAE.
-
+<img width="1005" height="547" alt="dataco_learned_fusion_distributions" src="https://github.com/user-attachments/assets/8edcf5a3-4c8b-46e9-a505-ee8b7816a4b1" />
 
 ||4. Visualizing Weight Distributions. The system automatically logs and exports real-time weight updates over operational horizons to ensure the model's logic is perfectly auditable and transparent for supply chain planning metrics. The pipeline automatically generates and dumps the performance graph into your project directory as: dataco_learned_fusion_distributions.png5.
 
